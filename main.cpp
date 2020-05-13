@@ -31,7 +31,8 @@ void outputRedirection(QtMsgType type, const QMessageLogContext &context, const 
     QByteArray localMsg = msg.toLocal8Bit();
     switch (type) {
     case QtDebugMsg:
-        fprintf(output, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+        //fprintf(output, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+        fprintf(output, "%s", localMsg.constData());
         break;
     case QtInfoMsg:
         fprintf(output, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
@@ -56,7 +57,8 @@ int main(int argc, char **argv)
     qInstallMsgHandler(outputRedirection);
 #else
 //    output = stdout; // 重定向于打印输出
-    output = stderr; // 重定向与错误输出
+    //output = stderr; // 重定向与错误输出
+    output = fopen("output.txt", "a"); //重定向于文件
     qInstallMessageHandler(outputRedirection);
 #endif
 
